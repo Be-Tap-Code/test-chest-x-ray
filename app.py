@@ -1,9 +1,13 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress TensorFlow logging
+os.environ['STREAMLIT_BROWSER_GATHER_USAGE_STATS'] = 'false'
 import warnings
 warnings.filterwarnings('ignore')  # Suppress warnings
 
 import streamlit as st
+st.set_option('deprecation.showfileUploaderEncoding', False)
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 import torch
 import logging
 import numpy as np
@@ -23,8 +27,8 @@ import pandas as pd
 nltk.download('punkt', quiet=True)
 nltk.download('wordnet', quiet=True)
 
-# Configure logging to only show warnings and errors
-logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s')
+# Configure logging to only show errors
+logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # Suppress specific CUDA warnings
@@ -32,6 +36,9 @@ if torch.cuda.is_available():
     torch.cuda.set_device(0)  # Use first GPU
     torch.backends.cudnn.benchmark = True
     torch.backends.cudnn.deterministic = True
+    # Suppress CUDA warnings
+    torch.cuda.empty_cache()
+    os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
 # Set device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
