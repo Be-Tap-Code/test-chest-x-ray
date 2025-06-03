@@ -5,8 +5,6 @@ import warnings
 warnings.filterwarnings('ignore')  # Suppress warnings
 
 import streamlit as st
-st.set_option('deprecation.showfileUploaderEncoding', False)
-st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Configure Streamlit page
 st.set_page_config(
@@ -25,6 +23,12 @@ st.markdown("""
     }
     .stButton>button {
         width: 100%;
+    }
+    .stSelectbox {
+        width: 100%;
+    }
+    .stMarkdown {
+        font-size: 16px;
     }
     </style>
 """, unsafe_allow_html=True)
