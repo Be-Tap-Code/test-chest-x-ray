@@ -108,7 +108,7 @@ def load_models():
     mlp = MLP(input_dim=mlp_input_dim, hidden_dim=mlp_hidden_dim, output_dim=mlp_output_dim).to(device)
 
     # Load the best model checkpoint
-    checkpoint_path = 'vit_biobart_best_model.pt'
+    checkpoint_path = '/kaggle/input/best-model-iux-ray/vit_biobart_best_model.pt'
     if os.path.exists(checkpoint_path):
         checkpoint = torch.load(checkpoint_path, map_location=device)
         mlp.load_state_dict(checkpoint['mlp_state_dict'])
