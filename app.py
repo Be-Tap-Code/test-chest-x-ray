@@ -108,7 +108,7 @@ def load_models():
     mlp = MLP(input_dim=mlp_input_dim, hidden_dim=mlp_hidden_dim, output_dim=mlp_output_dim).to(device)
 
     # Load the best model checkpoint
-    checkpoint_path = '/kaggle/input/best-model-iux-ray/vit_biobart_best_model.pt'
+    checkpoint_path = '/kaggle/best_model_vit_biobart_test/vit_biobart_best_model.pt'
     if os.path.exists(checkpoint_path):
         checkpoint = torch.load(checkpoint_path, map_location=device)
         mlp.load_state_dict(checkpoint['mlp_state_dict'])
@@ -126,7 +126,7 @@ def load_test_data():
     test_dataset = pd.read_csv('/kaggle/input/data-split-csv/Test_Data.csv')
     return test_dataset
 
-def load_image(img_name, base_path="/kaggle/input/best-model-iux-ray/xray_images"):
+def load_image(img_name, base_path="/kaggle/input/best_model_vit_biobart_test/xray_images"):
     filename = os.path.basename(img_name.strip())
     full_path = os.path.join(base_path, filename)
     try:
