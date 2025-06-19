@@ -101,8 +101,8 @@ def load_models():
     biobart_tokenizer = BartTokenizer.from_pretrained(biobart_model_name)
     biobart_model = BartForConditionalGeneration.from_pretrained(biobart_model_name).to(device)
 
-    # Initialize MLP
-    mlp_input_dim = 1024  # Concatenated CLIP features (512 * 2)
+    # Initialize MLP with correct input dimension (1536 instead of 1024)
+    mlp_input_dim = 1536  # Updated to match the checkpoint's dimension
     mlp_hidden_dim = 1024
     mlp_output_dim = biobart_model.config.d_model
     mlp = MLP(input_dim=mlp_input_dim, hidden_dim=mlp_hidden_dim, output_dim=mlp_output_dim).to(device)
@@ -147,12 +147,13 @@ def extract_features(image1, image2, clip_model, feature_extractor):
         inputs = {k: v.to(device) for k, v in inputs.items()}
         with torch.no_grad():
             outputs = clip_model.get_image_features(**inputs)
-        return outputs.squeeze(0)
+        return outputs
 
     img1_features = extract_single_feature(image1)
     img2_features = extract_single_feature(image2)
     
     if img1_features is not None and img2_features is not None:
+        # Don't squeeze the features to maintain the correct dimensions
         combined_feature = np.concatenate([img1_features.cpu().numpy(), img2_features.cpu().numpy()], axis=-1)
         return combined_feature
     return None
