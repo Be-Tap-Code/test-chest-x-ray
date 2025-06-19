@@ -92,8 +92,8 @@ class MLP(torch.nn.Module):
 
 @st.cache_resource
 def load_models():
-    # Load CLIP model and processor
-    clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device).eval()
+    # Load CLIP model and processor with from_tf=True
+    clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32", from_tf=True).to(device).eval()
     feature_extractor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
     # Load BioBART tokenizer and model
@@ -101,8 +101,8 @@ def load_models():
     biobart_tokenizer = BartTokenizer.from_pretrained(biobart_model_name)
     biobart_model = BartForConditionalGeneration.from_pretrained(biobart_model_name).to(device)
 
-    # Initialize MLP
-    mlp_input_dim = 1024  # Concatenated CLIP features (512 * 2)
+    # Initialize MLP with correct input dimension
+    mlp_input_dim = 1536  # Updated to match the checkpoint's dimension
     mlp_hidden_dim = 1024
     mlp_output_dim = biobart_model.config.d_model
     mlp = MLP(input_dim=mlp_input_dim, hidden_dim=mlp_hidden_dim, output_dim=mlp_output_dim).to(device)
