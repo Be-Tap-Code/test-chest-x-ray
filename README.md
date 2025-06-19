@@ -11,8 +11,6 @@ This project implements a deep learning model to generate medical reports from c
 - [Running the Evaluation Script](#running-the-evaluation-script)
 - [Model Checkpoint and Data](#model-checkpoint-and-data)
 - [Metrics](#metrics)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
