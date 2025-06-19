@@ -126,7 +126,7 @@ def load_test_data():
     test_dataset = pd.read_csv('/kaggle/input/data-split-csv/Test_Data.csv')
     return test_dataset
 
-def load_image(img_name, base_path="/kaggle/input/best_model_vit_biobart_test/xray_images"):
+def load_image(img_name, base_path="/kaggle/input/best-model-test/xray_images"):
     filename = os.path.basename(img_name.strip())
     full_path = os.path.join(base_path, filename)
     try:
